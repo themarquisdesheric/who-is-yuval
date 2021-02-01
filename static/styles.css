@@ -1,0 +1,9 @@
+.max-width {
+  max-width: 800px;
+}
+
+p {
+  text-align: justify;
+  hyphens: auto;
+  font-family: 'Open Sans', sans-serif;
+}
