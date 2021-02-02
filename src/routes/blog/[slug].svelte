@@ -1,17 +1,16 @@
 <script context="module" lang="ts">
-	import { blogPosts } from '../../content'
+	import { findPost } from '../../content'
 	import Tag from '../../components/Tag.svelte'
 	
   export const preload = async ({ params }) => ({
-		// professor: professorsKeyedBySlug[params.slug],
-		blogPost: blogPosts.find(blog => blog.filename.replace('.md', '') === params.slug),
+		blogPost: findPost(params.slug),
 	})
 </script>
 
 <script lang="ts">
 	export let blogPost
 
-	const { title, summary, date } = blogPost.metadata
+	const { title, summary, date } = blogPost
 </script>
 
 <svelte:head>

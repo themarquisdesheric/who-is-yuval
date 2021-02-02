@@ -10,9 +10,9 @@
   <h1 class="text-lg pb-2">Blog Posts</h1>
   
   <div class="prose">
-    {#each blogPosts as blogPost}
-      <a href="/blog/{blogPost.filename.replace('.md', '')}">
-        <p>{blogPost.metadata.title}</p>
+    {#each blogPosts as { slug, title }}
+      <a href="/blog/{slug}">
+        <p>{title}</p>
       </a>
     {/each}
   </div>

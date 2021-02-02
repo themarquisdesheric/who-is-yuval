@@ -16,12 +16,12 @@
 </div>
 
 <style>
-	h1,
-	h2 {
+	h1 {
 		font-size: 1.125rem;
 		line-height: 1.75rem;
 		font-weight: 400;
 	}
+	
 	p {
 		margin-top: .5rem;
 	}
