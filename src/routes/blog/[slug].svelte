@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+	import type { BlogPost } from '../../types'
 	import { findPost } from '../../content'
 	import Tag from '../../components/Tag.svelte'
 	
@@ -8,9 +9,9 @@
 </script>
 
 <script lang="ts">
-	export let blogPost
+	export let blogPost: BlogPost
 
-	const { title, summary, date } = blogPost
+	const { title, summary, date, tags } = blogPost
 </script>
 
 <svelte:head>
@@ -34,9 +35,9 @@
 		</div>
 	</header>
 	<div class="flex flex-wrap justify-center my-5">
-		<!-- {#each tags as tag}
+		{#each tags as tag}
 			<Tag {tag} className="mb-2" />
-		{/each} -->
+		{/each}
 	</div>
 	<div class="article-content">
 		SOME HTML
@@ -65,11 +66,6 @@
 	.article-content :global(p) {
 		font-weight: 400;
 		color: #000;
-	}
-
-	.prose :global(.interviewer) {
-		display: inline-block;
-		margin: 1.25rem 0;
 	}
 
 	.prose :global(.highlight) {

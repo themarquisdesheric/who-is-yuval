@@ -4,4 +4,5 @@ export type BlogPost = {
   date: Date,
   html: string,
   slug: string,
+  tags: string[]
 }

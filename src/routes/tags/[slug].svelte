@@ -1,16 +1,18 @@
 <script context="module" lang="ts">
-  // export const preload = async ({ params }) => {
-  //   const matchingProfessors = professors.filter(professor => professor.tags.includes(params.slug))
-
-  //   return { 
-  //     matchingProfessors,
-  //     slug: params.slug,
-  //   }
-	// }
+  import type { BlogPost } from "../../types"
+  import { findByTag } from '../../content'
+  export const preload = async ({ params }) => {
+    const matchingPosts = findByTag(params.slug)
+    
+    return { 
+      matchingPosts,
+      slug: params.slug,
+    }
+	}
 </script>
 
 <script lang="ts">
-  // export let matchingProfessors: Professor[], slug: string
+  export let matchingPosts: BlogPost[], slug: string
 </script>
 
 <svelte:head>
@@ -18,16 +20,16 @@
 </svelte:head>
 
 <div class="w-full">
-<h1 class="text-lg font-medium">#SOME SLUG</h1>
+<h1 class="text-lg font-medium">#{slug}</h1>
   <div class="prose">
     <ul>
-      <!-- {#each matchingProfessors as professor}
+      {#each matchingPosts as { slug, title }}
         <li>
-          <a href="/interviews/{professor.slug}" rel="prefetch">
-            {professor.name}
+          <a href="/blog/{slug}" rel="prefetch">
+            {title}
           </a>
         </li>
-      {/each} -->
+      {/each}
     </ul>
     <a href="/tags" rel="prefetch" class="text-sm">All Tags</a>
   </div>
