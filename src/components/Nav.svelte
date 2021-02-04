@@ -20,7 +20,7 @@
 		class="mobile-menu text-center overflow-hidden font-extralight"
 		style="--maxHeight: {maxHeight};"
 	>
-		{#each linkNames as linkName}
+		{#each ['home', ...linkNames] as linkName}
 			<NavLink {segment} {linkName} mobileMenu={true} {toggleMobileMenu} />
 		{/each}
 	</ul>
@@ -31,7 +31,7 @@
 			<a
 				href="."
 				class="logo font-extrabold pl-0"
-			>yuval allweil</a>
+			>&nbsp; &nbsp; &nbsp;</a>
 		</div>
 	
 		<button class="hamburger-menu flex items-center justify-center w-8 relative">
