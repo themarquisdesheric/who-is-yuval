@@ -31,12 +31,16 @@
 	.background {
 		background: #000 url("/procession_in_the_courtyard_of_the_ducal_palace.jpg") no-repeat center center;
 		background-size: cover;
-		min-height: 100vh;
+		height: 100vh;
 	}
 
 	.background main {
-		background-color: unset;
+		justify-content: center;
+		height: 100vh;
+		width: unset;
 		margin-top: 0;
+    padding: 25vh 0 0;
+		background-color: unset;
 	}
 
 	main {

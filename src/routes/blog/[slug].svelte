@@ -60,7 +60,7 @@
 
 	header .uppercase,
 	.prose {
-		font-family: 'Open Sans';
+		font-family: 'Open Sans', sans-serif;
 	}
 
 	.article-content :global(p) {
