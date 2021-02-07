@@ -55,6 +55,7 @@
 	nav.splashPage {
 		box-shadow: none;
 		background-color: unset;
+		color: rgb(255, 252, 191);
 	}
 
 	nav > div {

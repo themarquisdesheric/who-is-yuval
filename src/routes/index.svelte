@@ -13,9 +13,11 @@
 
 <style>
 	.container {
-		/* TODO: change to min-height once you know it */
+		/* table is a cross-browser fallback for `height: fit-content` 🙃 */
+		display: table;
 		height: fit-content;
 		width: 50%;
+		max-width: 300px;
 		padding: 1rem 0;
 		border: 1px solid;
 		background-color: rgb(66, 59, 44);
@@ -25,7 +27,8 @@
 	}
 
 	.container div {
-		font-size: .85em;
+		/* fluid font magic https://css-tricks.com/snippets/css/fluid-typography/ */
+		font-size: calc(.85em + 4.5 * ((100vw - 320px) / 680));
 	}
 
 	.primary {
@@ -37,6 +40,10 @@
 	.secondary {
 		color: rgb(250, 189, 15);
 		border-color: rgb(250, 189, 15);
+	}
+
+	h1 {
+		font-size: calc(16px + 6 * ((100vw - 320px) / 680));
 	}
 
 	h1,
@@ -52,5 +59,15 @@
 	hr {
 		max-width: 130px;
 		margin: .5rem auto .75rem;
+	}
+
+	@media screen and (min-width: 1200px) {
+		h1 {
+			font-size: 24px;
+		}
+
+		.container div {
+			font-size: 19.5px;
+		}
 	}
 </style>
