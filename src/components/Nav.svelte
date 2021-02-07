@@ -11,7 +11,7 @@
 	$: maxHeight = isMobileMenuOpen ? '175px' : '0px'
 </script>
 
-<nav class="fixed top-0 left-0 w-full z-10 bg-white">
+<nav class="fixed top-0 left-0 w-full z-10 bg-white" class:splashPage={!segment}>
 	<!-- mobile menu -->
 	{#if isMobileMenuOpen}
 		<div class="click-catcher" on:click={toggleMobileMenu} />
@@ -20,7 +20,7 @@
 		class="mobile-menu text-center overflow-hidden font-extralight"
 		style="--maxHeight: {maxHeight};"
 	>
-		{#each linkNames as linkName}
+		{#each ['home', ...linkNames] as linkName}
 			<NavLink {segment} {linkName} mobileMenu={true} {toggleMobileMenu} />
 		{/each}
 	</ul>
@@ -31,7 +31,7 @@
 			<a
 				href="."
 				class="logo font-extrabold pl-0"
-			>yuval allweil</a>
+			>&nbsp; &nbsp; &nbsp;</a>
 		</div>
 	
 		<button class="hamburger-menu flex items-center justify-center w-8 relative">
@@ -50,6 +50,12 @@
 <style>
 	nav {
 		box-shadow: 0 1px 4px rgba(0,0,0,.18);
+	}
+
+	nav.splashPage {
+		box-shadow: none;
+		background-color: unset;
+		color: rgb(255, 252, 191);
 	}
 
 	nav > div {
