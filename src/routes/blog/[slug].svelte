@@ -15,7 +15,7 @@
 </script>
 
 <svelte:head>
-	<title>{title} | Yuval Allweil</title>
+	<title>{title} | Who is Yuval?</title>
 </svelte:head>
 
 <div class="prose">

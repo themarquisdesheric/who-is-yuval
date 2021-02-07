@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>{status} | Yuval Allweil</title>
+	<title>{status} | Who is Yuval?</title>
 </svelte:head>
 
 <div class="w-full flex flex-col justify-center text-center">

@@ -1,5 +1,5 @@
 <svelte:head>
-	<title>Yuval Allweil</title>
+	<title>Who is Yuval?</title>
 </svelte:head>
 
 <div class="container primary text-center">

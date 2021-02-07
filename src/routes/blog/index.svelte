@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Blog Posts | Yuval Allweil</title>
+	<title>Blog Posts | Who is Yuval?</title>
 </svelte:head>
 
 <div class="w-full">
