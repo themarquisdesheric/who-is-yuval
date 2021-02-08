@@ -2,6 +2,14 @@
 	import Nav from '../components/Nav.svelte'
 
 	export let segment: string
+
+	const socialLinks = {
+		instagram: 'https://www.instagram.com/themarquisdesheric/',
+		linkedin: 'https://www.linkedin.com/in/yuval-allweil/',
+		github: 'https://github.com/themarquisdesheric',
+		twitter: 'https://twitter.com/esotericsheric',
+	}
+	const socialLinksEntries = Object.entries(socialLinks)
 </script>
 
 <div class:background={!segment}>
@@ -9,20 +17,19 @@
 	<main class="max-width relative flex mx-auto my-0 py-8">
 		<slot />
 	</main>
-	<footer class="text-center py-2 font-light">
+	<footer class="text-center pt-2 pb-14 font-light">
 		<div class="text-center mt-8">
-			<span class="mr-4">
-				<a href="https://twitter.com/specimen_mag?lang=en" target="_blank" rel="noopener noreferrer">
-					<img src="twitter.svg" alt="twitter" />
-				</a>
-			</span>
-			<span>
-				<a href="https://www.instagram.com/specimenmagazine/" target="_blank" rel="noopener noreferrer">
-					<img src="instagram.svg" alt="instagram" />
-				</a>
-			</span>
+			{#each socialLinksEntries as [key, value], index}
+				<span
+					class:mr-4={index !== socialLinksEntries.length - 1}
+					title={key}
+				>
+					<a href={value} target="_blank" rel="noopener noreferrer">
+						<img src="{key}.svg" alt={key} />
+					</a>
+				</span>
+			{/each}
 		</div>
-		<small class="block my-2">Yuval Allweil © {new Date().getFullYear()}</small>
 	</footer>
 </div>
 
@@ -61,5 +68,9 @@
 	img {
 		width: 2rem;
     padding: .6rem;
+	}
+
+	img[src="github.svg"] {
+		padding: 0.5rem;
 	}
 </style>
