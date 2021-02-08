@@ -1,5 +1,6 @@
 <script context="module" lang="ts">
 	import type { BlogPost } from '../../types'
+	import highlight from '../../highlight'
 	import { findPost } from '../../content'
 	import Tag from '../../components/Tag.svelte'
 	
@@ -11,14 +12,14 @@
 <script lang="ts">
 	export let blogPost: BlogPost
 
-	const { title, summary, date, tags } = blogPost
+	const { title, summary, date, tags, html } = blogPost
 </script>
 
 <svelte:head>
 	<title>{title} | Who is Yuval?</title>
 </svelte:head>
 
-<div class="prose">
+<div class="prose w-full">
 	<header>
 		<div class="text-center">
 			<h1 class="uppercase">{title}</h1>
@@ -39,8 +40,8 @@
 			<Tag {tag} className="mb-2" />
 		{/each}
 	</div>
-	<div class="article-content">
-		SOME HTML
+	<div use:highlight class="article-content">
+		{@html html}
 	</div>
 </div>
 
