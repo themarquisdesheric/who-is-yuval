@@ -1,4 +1,5 @@
 <script context="module" lang="ts">
+	import { format } from 'date-fns'
 	import type { BlogPost } from '../../types'
 	import highlight from '../../highlight'
 	import { findPost } from '../../content'
@@ -31,7 +32,7 @@
 		<p class="italic">{summary}</p>
 		<div class="flex justify-center items-center">
 			<div class="border-b w-full mr-3" />
-			<p>{date}</p>
+			<p>{format(date, 'M.d.yy')}</p>
 			<div class="border-b w-full ml-3" />
 		</div>
 	</header>

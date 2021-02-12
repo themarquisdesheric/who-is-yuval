@@ -12,7 +12,7 @@
 	const socialLinksEntries = Object.entries(socialLinks)
 </script>
 
-<div class:background={!segment}>
+<div class:home={!segment}>
 	<Nav {segment} />
 	<main class="max-width relative flex mx-auto my-0 py-8">
 		<slot />
@@ -34,19 +34,13 @@
 </div>
 
 <style>
-
-	.background {
-		background: #000 url("/procession_in_the_courtyard_of_the_ducal_palace.jpg") no-repeat center center;
-		background-size: cover;
-		height: 100vh;
-	}
-
-	.background main {
+	.home main {
 		justify-content: center;
 		height: 100vh;
+		max-width: unset;
 		width: unset;
 		margin-top: 0;
-    padding: 25vh 0 0;
+		padding: 0;
 		background-color: unset;
 	}
 

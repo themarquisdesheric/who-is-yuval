@@ -11,7 +11,7 @@
 	$: maxHeight = isMobileMenuOpen ? '175px' : '0px'
 </script>
 
-<nav class="fixed top-0 left-0 w-full z-10 bg-white" class:splashPage={!segment}>
+<nav class="fixed top-0 left-0 w-full z-10 bg-white" class:homePage={!segment}>
 	<!-- mobile menu -->
 	{#if isMobileMenuOpen}
 		<div class="click-catcher" on:click={toggleMobileMenu} />
@@ -52,7 +52,7 @@
 		box-shadow: 0 1px 4px rgba(0,0,0,.18);
 	}
 
-	nav.splashPage {
+	nav.homePage {
 		box-shadow: none;
 		background-color: unset;
 		color: rgb(255, 252, 191);
