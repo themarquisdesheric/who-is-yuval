@@ -22,13 +22,7 @@
 
 <div class="prose w-full">
 	<header>
-		<div class="text-center">
-			<h1 class="uppercase">{title}</h1>
-			<p class="italic">as written by</p>
-			<p class="uppercase text-xl font-extrabold">
-				Yuval Allweil
-			</p>
-		</div>
+		<h1>{title}</h1>
 		<p class="italic">{summary}</p>
 		<div class="flex justify-center items-center">
 			<div class="border-b w-full mr-3" />
@@ -47,7 +41,7 @@
 </div>
 
 <style>
-	header div h1,
+	h1,
 	header div p {
 		margin: 0;
 	}
@@ -56,11 +50,6 @@
 		text-align: center;
 	}
 
-	header div p.italic {
-		font-family: serif;
-	}
-
-	header .uppercase,
 	.prose {
 		font-family: 'Open Sans', sans-serif;
 	}
