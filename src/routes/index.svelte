@@ -1,3 +1,8 @@
+<script lang="ts">
+	import GithubDashboard from '../components/GithubDashboard.svelte'
+</script>
+
+
 <svelte:head>
 	<title>Who is Yuval?</title>
 </svelte:head>
@@ -13,6 +18,8 @@
 			</div>
 		</div>
 	</section>
+
+	<GithubDashboard />
 </div>
 
 

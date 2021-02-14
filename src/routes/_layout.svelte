@@ -36,7 +36,6 @@
 <style>
 	.home main {
 		justify-content: center;
-		height: 100vh;
 		max-width: unset;
 		width: unset;
 		margin-top: 0;
