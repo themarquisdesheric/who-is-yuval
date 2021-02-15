@@ -2,34 +2,36 @@
   import { onMount } from 'svelte';
   import Chart from 'chart.js';
 
-  const langPercentages = {
+  const languagePercentages = {
     "JavaScript": 80,
     "Shell": 9,
     "TypeScript": 9,
     "Python": 1,
   }
-  const labels = Object.entries(langPercentages).map(([key, value]) =>
-    `${key} (${value}%)`
-  )
-
+  const languageColors = [
+    'rgba(255, 99, 132, 0.2)',
+    'rgba(54, 162, 235, 0.2)',
+    'rgba(255, 206, 86, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+  ]
   let ctx;
 
   onMount(() => {
     const chart = new Chart(ctx, {
       type: 'pie',
       data: {
-        labels,
-          datasets: [{
-            data: Object.values(langPercentages),
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-            ],
-            borderWidth: 1
-          }]
+        labels: Object.keys(languagePercentages),
+        datasets: [{
+          data: Object.values(languagePercentages),
+          backgroundColor: languageColors,
+          borderWidth: 1
+        }]
       },
+      options: {
+        legend: {
+          display: false, 
+        }
+      }
     })
     
     return () => chart.destroy()
@@ -37,8 +39,25 @@
 </script>
 
 
-<section class="flex items-center">
-  <canvas bind:this={ctx} />
+<section class="flex flex-col justify-center">
+  <div class="relative flex justify-center items-center w-full">
+    <canvas bind:this={ctx} />
+    <img src="/github-large.png" alt="github logo" class="github-logo absolute" />
+  </div>
+
+  <div class="legend flex justify-center mt-8">
+    {#each Object.entries(languagePercentages) as [language, percentage], index}
+      <div
+        class="flex flex-col items-center"
+        class:mr-2={index !== languageColors.length - 1}
+        class:sm:mr-8={index !== languageColors.length - 1}
+      >
+        <span style="background: {languageColors[index]}" class="color-box inline-block mb-2" />
+        <span class="font-bold">{language}</span>
+        <span class="font-light">{percentage}%</span>
+      </div>
+    {/each}
+  </div>
 </section>
 
 
@@ -48,7 +67,26 @@
     background-color: rgba(0, 0, 255, 0.2);
   }
   
-  @media (min-width: 1300px) {
+  .github-logo {
+    width: 60px;
+    height: 60px;
+    top: calc(50% - 30px); 
+    border-radius: 50%;
+    background-color: #fff;
+  }
+
+  .legend {
+    max-width: 735px;
+    margin: 2rem auto 0;
+  }
+
+  .color-box {
+    width: 3.5rem;
+    height: 1.25rem;
+    border: 1px solid #fff;
+  }
+
+  @media (min-width: 1200px) {
     canvas {
       max-width: 75%;
       margin: 0 auto;
