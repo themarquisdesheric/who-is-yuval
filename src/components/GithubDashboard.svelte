@@ -1,13 +1,16 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import Chart from 'chart.js';
+  import type { LanguageTotals } from '../types'
+  import ProjectCounters from './ProjectCounters.svelte'
 
-  const languagePercentages = {
+  const languagePercentages: LanguageTotals = {
     "JavaScript": 80,
     "Shell": 9,
     "TypeScript": 9,
     "Python": 1,
   }
+  const numberOfProjects = languagePercentages
   const languageColors = [
     'rgba(255, 99, 132, 0.2)',
     'rgba(54, 162, 235, 0.2)',
@@ -40,23 +43,28 @@
 
 
 <section class="flex flex-col justify-center">
-  <div class="relative flex justify-center items-center w-full">
-    <canvas bind:this={ctx} />
-    <img src="/github-large.png" alt="github logo" class="github-logo absolute" />
-  </div>
+  <h2 class="text-center font-bold mb-10 text-5xl">Github Dashboard</h2>
+  <div class="relative">
+    <div class="relative flex justify-center items-center w-full">
+      <canvas bind:this={ctx} />
+      <img src="/github-large.png" alt="github logo" class="github-logo absolute" />
+    </div>
+    
+    <div class="legend flex justify-center mt-8">
+      {#each Object.entries(languagePercentages) as [language, percentage], index}
+        <div
+          class="flex flex-col items-center"
+          class:mr-2={index !== languageColors.length - 1}
+          class:sm:mr-8={index !== languageColors.length - 1}
+          >
+          <span style="background: {languageColors[index]}" class="color-box inline-block mb-2" />
+          <span class="font-bold">{language}</span>
+          <span class="font-light">{percentage}%</span>
+        </div>
+      {/each}
+    </div>
 
-  <div class="legend flex justify-center mt-8">
-    {#each Object.entries(languagePercentages) as [language, percentage], index}
-      <div
-        class="flex flex-col items-center"
-        class:mr-2={index !== languageColors.length - 1}
-        class:sm:mr-8={index !== languageColors.length - 1}
-      >
-        <span style="background: {languageColors[index]}" class="color-box inline-block mb-2" />
-        <span class="font-bold">{language}</span>
-        <span class="font-light">{percentage}%</span>
-      </div>
-    {/each}
+    <ProjectCounters {numberOfProjects} />
   </div>
 </section>
 
@@ -65,6 +73,11 @@
   section {
     height: 100vh;
     background-color: rgba(0, 0, 255, 0.2);
+  }
+
+  canvas {
+    max-width: 800px;
+    margin: 0 auto;
   }
   
   .github-logo {
@@ -84,12 +97,5 @@
     width: 3.5rem;
     height: 1.25rem;
     border: 1px solid #fff;
-  }
-
-  @media (min-width: 1200px) {
-    canvas {
-      max-width: 75%;
-      margin: 0 auto;
-    }
   }
 </style>

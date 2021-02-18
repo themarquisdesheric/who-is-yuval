@@ -6,3 +6,10 @@ export type BlogPost = {
   slug: string,
   tags: string[]
 }
+
+export type LanguageTotals = {
+  "JavaScript": number,
+  "TypeScript": number,
+  "Python": number,
+  "Shell": number,
+}
