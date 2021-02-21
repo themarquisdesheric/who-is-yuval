@@ -21,6 +21,8 @@
 		"chart.js": "^2.9.4",
 		"compression": "^1.7.1",
 		"date-fns": "^2.17.0",
+		"dotenv": "^8.2.0",
+		"isomorphic-fetch": "^3.0.0",
 		"polka": "next",
 		"prismjs": "^1.23.0",
 		"sirv": "^1.0.0"

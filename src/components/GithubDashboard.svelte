@@ -1,41 +1,42 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import Chart from 'chart.js';
+  import { onMount } from 'svelte'
   import type { LanguageTotals } from '../types'
+  import { populatePieChart, instantiatePieChart } from '../utils'
   import ProjectCounters from './ProjectCounters.svelte'
 
-  const languagePercentages: LanguageTotals = {
-    "JavaScript": 80,
-    "Shell": 9,
-    "TypeScript": 9,
-    "Python": 1,
-  }
-  const numberOfProjects = languagePercentages
+  export let token: string
+  export let dev: boolean
+
+  let languagePercentages: LanguageTotals
+  const setLanguagePercentages = (percentages) =>
+    languagePercentages = percentages
+  $: numberOfProjects = languagePercentages
   const languageColors = [
     'rgba(255, 99, 132, 0.2)',
     'rgba(54, 162, 235, 0.2)',
     'rgba(255, 206, 86, 0.2)',
     'rgba(75, 192, 192, 0.2)',
   ]
-  let ctx;
+  let chartContext;
+  let currentProject
+
+  const setCurrentProject = (project) =>
+    currentProject = project
+
+  $: chart = languagePercentages && instantiatePieChart({ chartContext, languagePercentages, languageColors })
 
   onMount(() => {
-    const chart = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        labels: Object.keys(languagePercentages),
-        datasets: [{
-          data: Object.values(languagePercentages),
-          backgroundColor: languageColors,
-          borderWidth: 1
-        }]
-      },
-      options: {
-        legend: {
-          display: false, 
-        }
+    if (dev) {
+      // don't call the API
+      languagePercentages = {
+        JavaScript: 80,
+        Shell: 9,
+        TypeScript: 9,
+        Python: 1,
       }
-    })
+    } else {
+      populatePieChart({ setLanguagePercentages, setCurrentProject, token })
+    }
     
     return () => chart.destroy()
   })
@@ -43,28 +44,31 @@
 
 
 <section class="flex flex-col justify-center">
-  <h2 class="text-center font-bold mb-10 text-5xl">Github Dashboard</h2>
+  <h2 class="text-center font-bold mb-8 text-5xl">Github Dashboard</h2>
   <div class="relative">
+    <p class="text-center font-light mb-6">Language Composition of Projects</p>
     <div class="relative flex justify-center items-center w-full">
-      <canvas bind:this={ctx} />
+      <canvas bind:this={chartContext} />
       <img src="/github-large.png" alt="github logo" class="github-logo absolute" />
     </div>
     
-    <div class="legend flex justify-center mt-8">
-      {#each Object.entries(languagePercentages) as [language, percentage], index}
-        <div
-          class="flex flex-col items-center"
-          class:mr-2={index !== languageColors.length - 1}
-          class:sm:mr-8={index !== languageColors.length - 1}
-          >
-          <span style="background: {languageColors[index]}" class="color-box inline-block mb-2" />
-          <span class="font-bold">{language}</span>
-          <span class="font-light">{percentage}%</span>
-        </div>
-      {/each}
-    </div>
+    {#if languagePercentages}
+      <div class="legend flex justify-center mt-8">
+        {#each Object.entries(languagePercentages) as [language, percentage], index}
+          <div
+            class="flex flex-col items-center"
+            class:mr-2={index !== languageColors.length - 1}
+            class:sm:mr-8={index !== languageColors.length - 1}
+            >
+            <span style="background: {languageColors[index]}" class="color-box inline-block mb-2" />
+            <span class="font-bold">{language}</span>
+            <span class="font-light">{percentage}%</span>
+          </div>
+        {/each}
+      </div>
 
-    <ProjectCounters {numberOfProjects} />
+      <ProjectCounters {numberOfProjects} />
+    {/if}
   </div>
 </section>
 
