@@ -5,7 +5,7 @@ import type { RepoLangStats, OptionalLanguageTotals, LanguageTotals } from './ty
 /**
  * adds each repo's language statistics to the running total
  */
-const updateLanguageTotals = (repoLangStats: RepoLangStats, totals: OptionalLanguageTotals): void =>
+export const updateLanguageTotals = (repoLangStats: RepoLangStats, totals: OptionalLanguageTotals): void =>
   Object.keys(repoLangStats).forEach((lang) => {
     if (!totals[lang]) totals[lang] = 0
 
@@ -18,28 +18,32 @@ type LanguageTotalsOrEmpty = LanguageTotals | {}
 /**
  * returns the repo statistics as percentages
  */
-const calcLangPercentages = (languageTotals: OptionalLanguageTotals): LanguageTotalsOrEmpty => {
-  const { total } = languageTotals;
+
+export const calcLangPercentages = (languageTotals: OptionalLanguageTotals): LanguageTotalsOrEmpty => {
+  const { total } = languageTotals
   
-  const languagePercentages = Object.keys(languageTotals)
-    .reduce((accumulator, lang) => {
-      if (lang === 'total') return accumulator;
+  return Object.keys(languageTotals)
+    .reduce((languagePercentages, lang) => {
+      if (lang === 'total') return languagePercentages;
 
-      accumulator[lang] = Math.round(languageTotals[lang] / total * 100);
+      languagePercentages[lang] = Math.round(languageTotals[lang] / total * 100);
       
-      return accumulator;
-    }, {});
-
+      return languagePercentages;
+    }, {})
+}
+  
+export const sortLanguagePercentages = (languagePercentages) => {
+  // convert to array to sort
   const sortedLanguagePercentages = Object.entries(languagePercentages).sort(
     (a: [string, number], b: [string, number]) =>
       b[1] - a[1]  
   )
-
+  // reconstitute object in order
   return sortedLanguagePercentages.reduce((accumulator, current) => ({
     ...accumulator,
     [current[0]]: current[1],
   }), {})
-};
+}
 
 /**
  * gets most recently updated repo
@@ -86,7 +90,9 @@ export const fetchPieChartData = ({ setLanguagePercentages, setCurrentProject, t
       Promise.all(promises)
         .then(() =>
           setLanguagePercentages(
-            calcLangPercentages(languageTotals)
+            sortLanguagePercentages(
+              calcLangPercentages(languageTotals)
+            )
           )
         )
     })

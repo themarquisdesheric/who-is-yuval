@@ -7,7 +7,7 @@ export type BlogPost = {
   tags: string[]
 }
 
-export type LanguageTotals = {
+export interface LanguageTotals {
   JavaScript: number
   TypeScript: number
   Python: number
