@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import type { LanguageTotals } from '../types'
-  import { populatePieChart, instantiatePieChart } from '../utils'
+  import { fetchPieChartData, instantiatePieChart } from '../utils'
   import ProjectCounters from './ProjectCounters.svelte'
 
   export let token: string
@@ -35,7 +35,7 @@
         Python: 1,
       }
     } else {
-      populatePieChart({ setLanguagePercentages, setCurrentProject, token })
+      fetchPieChartData({ setLanguagePercentages, setCurrentProject, token })
     }
     
     return () => chart.destroy()
@@ -54,7 +54,7 @@
     
     {#if languagePercentages}
       <div class="legend flex justify-center mt-8">
-        {#each Object.entries(languagePercentages) as [language, percentage], index}
+        {#each Object.entries(languagePercentages) as [language, percentage], index (language)}
           <div
             class="flex flex-col items-center"
             class:mr-2={index !== languageColors.length - 1}

@@ -2,7 +2,10 @@ import fetch from 'isomorphic-fetch'
 import Chart from 'chart.js'
 import type { RepoLangStats, OptionalLanguageTotals, LanguageTotals } from './types'
 
-const getLanguageTotals = (repoLangStats: RepoLangStats, totals: OptionalLanguageTotals): void =>
+/**
+ * adds each repo's language statistics to the running total
+ */
+const updateLanguageTotals = (repoLangStats: RepoLangStats, totals: OptionalLanguageTotals): void =>
   Object.keys(repoLangStats).forEach((lang) => {
     if (!totals[lang]) totals[lang] = 0
 
@@ -12,26 +15,47 @@ const getLanguageTotals = (repoLangStats: RepoLangStats, totals: OptionalLanguag
 
 type LanguageTotalsOrEmpty = LanguageTotals | {}
 
+/**
+ * returns the repo statistics as percentages
+ */
 const calcLangPercentages = (languageTotals: OptionalLanguageTotals): LanguageTotalsOrEmpty => {
   const { total } = languageTotals;
   
-  return Object.keys(languageTotals)
-    .reduce((languagePercentages, lang) => {
-      if (lang === 'total') return languagePercentages;
+  const languagePercentages = Object.keys(languageTotals)
+    .reduce((accumulator, lang) => {
+      if (lang === 'total') return accumulator;
 
-      languagePercentages[lang] = Math.round(languageTotals[lang] / total * 100);
+      accumulator[lang] = Math.round(languageTotals[lang] / total * 100);
       
-      return languagePercentages;
+      return accumulator;
     }, {});
+
+  const sortedLanguagePercentages = Object.entries(languagePercentages).sort(
+    (a: [string, number], b: [string, number]) =>
+      b[1] - a[1]  
+  )
+
+  return sortedLanguagePercentages.reduce((accumulator, current) => ({
+    ...accumulator,
+    [current[0]]: current[1],
+  }), {})
 };
 
-type PopulatePieChartArgs = {
+/**
+ * gets most recently updated repo
+ */
+const getCurrentProject = (repos) =>
+  repos.sort((a, b) =>
+    new Date(b.updated_at).valueOf() - new Date(a.updated_at).valueOf()
+  )[0]
+
+type FetchPieChartDataArgs = {
   setLanguagePercentages: (languagePercentages: LanguageTotalsOrEmpty) => void,
   setCurrentProject: (currentProject: {}) => void,
   token: string,
 }
 
-export const populatePieChart = ({ setLanguagePercentages, setCurrentProject, token }: PopulatePieChartArgs) => {
+export const fetchPieChartData = ({ setLanguagePercentages, setCurrentProject, token }: FetchPieChartDataArgs) => {
   const headers = new Headers({
     Authorization: `token ${token}`,
   })
@@ -43,29 +67,20 @@ export const populatePieChart = ({ setLanguagePercentages, setCurrentProject, to
     .then(res => res.json())
     .then(repos => {
       repos = repos.filter(repo => 
-        repo.owner.login === 'themarquisdesheric' && 
-        repo.name !== 'incubator-datafu'
+        repo.owner.login === 'themarquisdesheric' && repo.name !== 'incubator-datafu'
       )
-      // gets most recently updated repo
-      const currentProject = repos.sort((a, b) =>
-        new Date(b.updated_at).valueOf() - new Date(a.updated_at).valueOf())[0]
 
-      setCurrentProject(currentProject)
+      setCurrentProject(getCurrentProject(repos))
       // get language statistics for each repo
       const promises = repos.map(repo => 
         fetch(repo.languages_url, { headers })
           .then(res => res.json())
           .then(repoStats => {
-            console.log('repoStats', repoStats);
+            ['HTML', 'CSS', 'SCSS', 'Svelte'].forEach(lang =>
+              delete repoStats[lang]
+            )
             
-            delete repoStats.HTML
-            delete repoStats.CSS
-            delete repoStats.SCSS
-            delete repoStats.Svelte
-            
-            getLanguageTotals(repoStats, languageTotals)
-            
-            return repo
+            updateLanguageTotals(repoStats, languageTotals)
           }))
 
       Promise.all(promises)
@@ -73,7 +88,8 @@ export const populatePieChart = ({ setLanguagePercentages, setCurrentProject, to
           setLanguagePercentages(
             calcLangPercentages(languageTotals)
           )
-    )})
+        )
+    })
 }
 
 type PieChartArgs = {
