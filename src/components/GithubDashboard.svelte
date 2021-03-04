@@ -1,41 +1,46 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import type { LanguageTotals } from '../types'
-  import { fetchPieChartData, instantiatePieChart } from '../utils'
+  import languagePercentages from '../store'
+  import { fetchPieChartData, instantiatePieChart } from '../routes/projects/utils'
   import ProjectCounters from './ProjectCounters.svelte'
 
   export let token: string
   export let dev: boolean
 
-  let languagePercentages: LanguageTotals
-  const setLanguagePercentages = (percentages) =>
-    languagePercentages = percentages
-  $: numberOfProjects = languagePercentages
+  let currentProject
+  let chartContext
+
+  const setCurrentProject = (project) =>
+    currentProject = project
+  
   const languageColors = [
     'rgba(255, 99, 132, 0.2)',
     'rgba(54, 162, 235, 0.2)',
     'rgba(255, 206, 86, 0.2)',
     'rgba(75, 192, 192, 0.2)',
   ]
-  let chartContext;
-  let currentProject
 
-  const setCurrentProject = (project) =>
-    currentProject = project
-
-  $: chart = languagePercentages && instantiatePieChart({ chartContext, languagePercentages, languageColors })
+  $: chart = chartContext && $languagePercentages && instantiatePieChart({
+    chartContext,
+    languagePercentages: $languagePercentages,
+    languageColors
+  })
 
   onMount(() => {
     if (dev) {
       // don't call the API
-      languagePercentages = {
+      languagePercentages.set({
         JavaScript: 80,
         Shell: 9,
         TypeScript: 9,
         Python: 1,
-      }
-    } else {
-      fetchPieChartData({ setLanguagePercentages, setCurrentProject, token })
+      })
+    } else if (!$languagePercentages) {
+      fetchPieChartData({
+        setLanguagePercentages: languagePercentages.set,
+        setCurrentProject,
+        token,
+      })
     }
     
     return () => chart.destroy()
@@ -52,9 +57,9 @@
       <img src="/github-large.png" alt="github logo" class="github-logo absolute" />
     </div>
     
-    {#if languagePercentages}
+    {#if $languagePercentages}
       <div class="legend flex justify-center mt-8">
-        {#each Object.entries(languagePercentages) as [language, percentage], index (language)}
+        {#each Object.entries($languagePercentages) as [language, percentage], index (language)}
           <div
             class="flex flex-col items-center"
             class:mr-2={index !== languageColors.length - 1}
@@ -67,7 +72,7 @@
         {/each}
       </div>
 
-      <ProjectCounters {numberOfProjects} />
+      <ProjectCounters numberOfProjects={$languagePercentages} />
     {/if}
   </div>
 </section>

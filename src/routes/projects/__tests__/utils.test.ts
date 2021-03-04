@@ -1,5 +1,5 @@
-import { calcLangPercentages, updateLanguageTotals, sortLanguagePercentages }  from './utils'
-import type { RepoLangStats } from './types'
+import { calcLangPercentages, updateLanguageTotals, sortLanguagePercentages }  from '../utils'
+import type { RepoLangStats } from '../../../types'
 
 describe('updateLanguageTotals', () => {
   it('should calculate the totals for each language', () => {

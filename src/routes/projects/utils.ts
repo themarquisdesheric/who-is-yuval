@@ -1,6 +1,13 @@
 import fetch from 'isomorphic-fetch'
 import Chart from 'chart.js'
-import type { RepoLangStats, OptionalLanguageTotals, LanguageTotals } from './types'
+import type {
+  Repo,
+  RepoLangStats,
+  OptionalLanguageTotals,
+  LanguageTotals,
+  LanguageTotalsOrEmpty,
+  FetchPieChartDataArgs,
+} from '../../types'
 
 /**
  * adds each repo's language statistics to the running total
@@ -12,8 +19,6 @@ export const updateLanguageTotals = (repoLangStats: RepoLangStats, totals: Optio
     totals[lang] += repoLangStats[lang] 
     totals.total += repoLangStats[lang]
   })
-
-type LanguageTotalsOrEmpty = LanguageTotals | {}
 
 /**
  * returns the repo statistics as percentages
@@ -48,16 +53,10 @@ export const sortLanguagePercentages = (languagePercentages) => {
 /**
  * gets most recently updated repo
  */
-const getCurrentProject = (repos) =>
+const getCurrentProject = (repos: Repo[]) =>
   repos.sort((a, b) =>
     new Date(b.updated_at).valueOf() - new Date(a.updated_at).valueOf()
   )[0]
-
-type FetchPieChartDataArgs = {
-  setLanguagePercentages: (languagePercentages: LanguageTotalsOrEmpty) => void,
-  setCurrentProject: (currentProject: {}) => void,
-  token: string,
-}
 
 export const fetchPieChartData = ({ setLanguagePercentages, setCurrentProject, token }: FetchPieChartDataArgs) => {
   const headers = new Headers({
