@@ -3,6 +3,7 @@
   import languagePercentages from '../store'
   import { fetchPieChartData, instantiatePieChart } from '../routes/projects/utils'
   import ProjectCounters from './ProjectCounters.svelte'
+  import LoadingSpinner from './LoadingSpinner.svelte'
 
   export let token: string
   export let dev: boolean
@@ -52,12 +53,13 @@
   <h2 class="text-center font-bold mb-8 text-5xl">Github Dashboard</h2>
   <div class="relative">
     <p class="text-center font-light mb-6">Language Composition of Projects</p>
-    <div class="relative flex justify-center items-center w-full">
-      <canvas bind:this={chartContext} />
-      <img src="/github-large.png" alt="github logo" class="github-logo absolute" />
-    </div>
     
     {#if $languagePercentages}
+      <div class="relative flex justify-center items-center w-full">
+        <canvas bind:this={chartContext} />
+        <img src="/github-large.png" alt="github logo" class="github-logo absolute" />
+      </div>
+
       <div class="legend flex justify-center mt-8">
         {#each Object.entries($languagePercentages) as [language, percentage], index (language)}
           <div
@@ -73,6 +75,8 @@
       </div>
 
       <ProjectCounters numberOfProjects={$languagePercentages} />
+    {:else}
+      <LoadingSpinner />
     {/if}
   </div>
 </section>
