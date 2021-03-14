@@ -1,13 +1,14 @@
-import { calcLangPercentages, updateLanguageTotals, sortLanguagePercentages }  from '../utils'
+import { updatePieChartLanguageTotals, updateProjectCountersLanguageTotals, calcLangPercentages, sortLanguagePercentages }  from '../utils'
 import type { RepoLangStats } from '../../../types'
 
-describe('updateLanguageTotals', () => {
-  it('should calculate the totals for each language', () => {
+describe('updatePieChartLanguageTotals', () => {
+  it('should calculate the totals for each language, including the total of all languages', () => {
     const totals = {
       JavaScript: 500,
       TypeScript: 700,
       total: 1200,
     }
+    
     const repoLangStats: RepoLangStats = {
       JavaScript: 500,
       TypeScript: 300, 
@@ -21,8 +22,56 @@ describe('updateLanguageTotals', () => {
       total: 2200,
     }
   
-    updateLanguageTotals(repoLangStats, totals)
+    updatePieChartLanguageTotals(repoLangStats, totals)
   
+    expect(totals).toEqual(expectedResult)
+  })
+})
+
+describe('updateProjectCountersLanguageTotals', () => {
+  it('should calculate the totals for each language', () => {
+    const totals = {
+      JavaScript: 3,
+      TypeScript: 2, 
+      Python: 1, 
+    }
+
+    const repoLangStats: RepoLangStats = {
+      Python: 2300,
+      Shell: 400, 
+    }
+
+    const expectedResult: RepoLangStats = {
+      JavaScript: 3,
+      TypeScript: 2, 
+      Python: 2, 
+    }
+  
+    updateProjectCountersLanguageTotals(repoLangStats, totals)
+  
+    expect(totals).toEqual(expectedResult)
+  })
+
+  it('should set the language in `totals` if it does not exist, and calculate the totals for each language', () => {
+    const totals = {
+      JavaScript: 3,
+      TypeScript: 2, 
+      Python: 1, 
+    }
+
+    const shellRepo: RepoLangStats = {
+      Shell: 400,
+    }
+
+    const expectedResult: RepoLangStats = {
+      JavaScript: 3,
+      TypeScript: 2, 
+      Python: 1,
+      Shell: 1,
+    }
+
+    updateProjectCountersLanguageTotals(shellRepo, totals)
+
     expect(totals).toEqual(expectedResult)
   })
 })

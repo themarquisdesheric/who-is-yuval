@@ -32,8 +32,8 @@ export type LanguageTotalsOrEmpty = LanguageTotals | {}
 export type Repo = { owner: { login: string }, name: string, languages_url: string, updated_at: string }
 
 type ProjectsStore = {
-  pieChartLanguageTotals: LanguageTotals
-  projectCountersLanguageTotals: LanguageTotals
+  pieChartLanguageTotals: LanguageTotals | OptionalLanguageTotals
+  projectCountersLanguageTotals: LanguageTotals | OptionalLanguageTotals
   currentProject: Repo
   mostPopularRepo: Repo
 }

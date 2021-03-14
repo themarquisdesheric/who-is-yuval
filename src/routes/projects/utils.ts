@@ -24,24 +24,22 @@ export const updatePieChartLanguageTotals = (repoStats: RepoLangStats, totals: O
  * adds each repo's dominant language for the project counters that surround the pie chart
  */
 
-const updateProjectCountersLanguageTotals = (repoStats: RepoLangStats, repoCountByLanguage) => {
+export const updateProjectCountersLanguageTotals = (repoStats: RepoLangStats, totals: OptionalLanguageTotals): void => {
   let repoLanguage
 
   if (repoStats['Python']) {
     repoLanguage = 'Python'
-  } else if (repoStats['Shell']) {
-    repoLanguage = 'Shell'
   } else if (repoStats['TypeScript']) {
     repoLanguage = 'TypeScript'
   } else if (repoStats['JavaScript']) {
     repoLanguage = 'JavaScript'
+  } else if (repoStats['Shell']) {
+    repoLanguage = 'Shell'
   }
 
-  Object.keys(repoStats).forEach((lang) => {
-    if (!repoCountByLanguage[lang]) repoCountByLanguage[lang] = 0
+  if (!totals[repoLanguage]) totals[repoLanguage] = 0
 
-    repoCountByLanguage[lang] += 1
-  })
+  totals[repoLanguage] += 1
 }
 
 /**
