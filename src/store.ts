@@ -1,3 +1,9 @@
 import { writable } from 'svelte/store'
 
-export default writable(undefined)
+const initialState = {
+  pieChartLanguageTotals: undefined,
+  currentProject: undefined,
+  mostPopularRepo: undefined,
+}
+
+export default writable(initialState)

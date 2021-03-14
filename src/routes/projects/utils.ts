@@ -12,13 +12,37 @@ import type {
 /**
  * adds each repo's language statistics to the running total
  */
-export const updateLanguageTotals = (repoLangStats: RepoLangStats, totals: OptionalLanguageTotals): void =>
-  Object.keys(repoLangStats).forEach((lang) => {
+export const updatePieChartLanguageTotals = (repoStats: RepoLangStats, totals: OptionalLanguageTotals): void =>
+  Object.keys(repoStats).forEach((lang) => {
     if (!totals[lang]) totals[lang] = 0
 
-    totals[lang] += repoLangStats[lang] 
-    totals.total += repoLangStats[lang]
+    totals[lang] += repoStats[lang] 
+    totals.total += repoStats[lang]
   })
+
+/**
+ * adds each repo's dominant language for the project counters that surround the pie chart
+ */
+
+const updateProjectCountersLanguageTotals = (repoStats: RepoLangStats, repoCountByLanguage) => {
+  let repoLanguage
+
+  if (repoStats['Python']) {
+    repoLanguage = 'Python'
+  } else if (repoStats['Shell']) {
+    repoLanguage = 'Shell'
+  } else if (repoStats['TypeScript']) {
+    repoLanguage = 'TypeScript'
+  } else if (repoStats['JavaScript']) {
+    repoLanguage = 'JavaScript'
+  }
+
+  Object.keys(repoStats).forEach((lang) => {
+    if (!repoCountByLanguage[lang]) repoCountByLanguage[lang] = 0
+
+    repoCountByLanguage[lang] += repoStats[lang] 
+  })
+}
 
 /**
  * returns the repo statistics as percentages
@@ -58,41 +82,52 @@ const getCurrentProject = (repos: Repo[]) =>
     new Date(b.updated_at).valueOf() - new Date(a.updated_at).valueOf()
   )[0]
 
-export const fetchPieChartData = ({ setLanguagePercentages, setCurrentProject, token }: FetchPieChartDataArgs) => {
+export const fetchPieChartData = ({ setLanguagePercentages, token }: FetchPieChartDataArgs) => {
   const headers = new Headers({
     Authorization: `token ${token}`,
   })
-  const languageTotals = {
+  const pieChartLanguageTotals = {
     total: 0
   }
+  const projectCountersLanguageTotals = {}
+  let currentProject
   
   fetch('https://api.github.com/users/themarquisdesheric/repos?per_page=100', { headers })
     .then(res => res.json())
     .then(repos => {
       repos = repos.filter(repo => 
-        repo.owner.login === 'themarquisdesheric' && repo.name !== 'incubator-datafu'
+        repo.owner.login === 'themarquisdesheric' && repo.name !== 'incubator-datafu' && !repo.private
       )
-
-      setCurrentProject(getCurrentProject(repos))
+      currentProject = getCurrentProject(repos)
+      // ! make a component to display the number of stars with the forks_count and repo's name
+      const mostPopularRepo = repos.sort((a, b) =>
+        b.stargazers_count - a.stargazers_count  
+      )[0]
       // get language statistics for each repo
       const promises = repos.map(repo => 
         fetch(repo.languages_url, { headers })
           .then(res => res.json())
           .then(repoStats => {
+            console.log('repoStats', repoStats);
             ['HTML', 'CSS', 'SCSS', 'Svelte'].forEach(lang =>
               delete repoStats[lang]
             )
-            
-            updateLanguageTotals(repoStats, languageTotals)
+            updatePieChartLanguageTotals(repoStats, pieChartLanguageTotals)
+            updateProjectCountersLanguageTotals(repoStats, projectCountersLanguageTotals)
           }))
 
       Promise.all(promises)
-        .then(() =>
-          setLanguagePercentages(
-            sortLanguagePercentages(
-              calcLangPercentages(languageTotals)
-            )
+        .then(() => {
+          const sortedPieChartLanguageTotals = sortLanguagePercentages(
+            calcLangPercentages(pieChartLanguageTotals)
           )
+          
+          setLanguagePercentages({
+            pieChartLanguageTotals: sortedPieChartLanguageTotals,
+            mostPopularRepo,
+            currentProject,
+          })
+        }
         )
     })
 }

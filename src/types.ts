@@ -33,6 +33,5 @@ export type Repo = { owner: { login: string }, name: string, languages_url: stri
 
 export type FetchPieChartDataArgs = {
   setLanguagePercentages: (languagePercentages: LanguageTotalsOrEmpty) => void,
-  setCurrentProject: (currentProject: {}) => void,
   token: string,
 }

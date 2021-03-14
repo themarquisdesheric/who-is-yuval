@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import languagePercentages from '../store'
+  import store from '../store'
   import { fetchPieChartData, instantiatePieChart } from '../routes/projects/utils'
   import ProjectCounters from './ProjectCounters.svelte'
   import LoadingSpinner from './LoadingSpinner.svelte'
@@ -8,12 +8,8 @@
   export let token: string
   export let dev: boolean
 
-  let currentProject
   let chartContext
 
-  const setCurrentProject = (project) =>
-    currentProject = project
-  
   const languageColors = [
     'rgba(255, 99, 132, 0.2)',
     'rgba(54, 162, 235, 0.2)',
@@ -21,25 +17,27 @@
     'rgba(75, 192, 192, 0.2)',
   ]
 
-  $: chart = chartContext && $languagePercentages && instantiatePieChart({
+  $: chart = chartContext && $store.pieChartLanguageTotals && instantiatePieChart({
     chartContext,
-    languagePercentages: $languagePercentages,
+    languagePercentages: $store.pieChartLanguageTotals,
     languageColors
   })
 
   onMount(() => {
     if (dev) {
       // don't call the API
-      languagePercentages.set({
-        JavaScript: 80,
-        Shell: 9,
-        TypeScript: 9,
-        Python: 1,
-      })
-    } else if (!$languagePercentages) {
+      store.update(pastStore => ({
+        ...pastStore,
+        pieChartLanguageTotals: {
+          JavaScript: 80,
+          Shell: 9,
+          TypeScript: 9,
+          Python: 1,
+        }
+      }))
+    } else if (!$store.pieChartLanguageTotals) {
       fetchPieChartData({
-        setLanguagePercentages: languagePercentages.set,
-        setCurrentProject,
+        setLanguagePercentages: store.set,
         token,
       })
     }
@@ -54,14 +52,14 @@
   <div class="relative">
     <p class="text-center font-light mb-6">Language Composition of Projects</p>
     
-    {#if $languagePercentages}
+    {#if $store.pieChartLanguageTotals}
       <div class="relative flex justify-center items-center w-full">
         <canvas bind:this={chartContext} />
         <img src="/github-large.png" alt="github logo" class="github-logo absolute" />
       </div>
 
       <div class="legend flex justify-center mt-8">
-        {#each Object.entries($languagePercentages) as [language, percentage], index (language)}
+        {#each Object.entries($store.pieChartLanguageTotals) as [language, percentage], index (language)}
           <div
             class="flex flex-col items-center"
             class:mr-2={index !== languageColors.length - 1}
@@ -74,7 +72,7 @@
         {/each}
       </div>
 
-      <ProjectCounters numberOfProjects={$languagePercentages} />
+      <ProjectCounters numberOfProjects={$store.pieChartLanguageTotals} />
     {:else}
       <LoadingSpinner />
     {/if}
