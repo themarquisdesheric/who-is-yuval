@@ -31,7 +31,14 @@ export type LanguageTotalsOrEmpty = LanguageTotals | {}
 
 export type Repo = { owner: { login: string }, name: string, languages_url: string, updated_at: string }
 
+type ProjectsStore = {
+  pieChartLanguageTotals: LanguageTotals
+  projectCountersLanguageTotals: LanguageTotals
+  currentProject: Repo
+  mostPopularRepo: Repo
+}
+
 export type FetchPieChartDataArgs = {
-  setLanguagePercentages: (languagePercentages: LanguageTotalsOrEmpty) => void,
+  setStore: (store: ProjectsStore) => void,
   token: string,
 }

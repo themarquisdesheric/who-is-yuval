@@ -40,7 +40,7 @@ const updateProjectCountersLanguageTotals = (repoStats: RepoLangStats, repoCount
   Object.keys(repoStats).forEach((lang) => {
     if (!repoCountByLanguage[lang]) repoCountByLanguage[lang] = 0
 
-    repoCountByLanguage[lang] += repoStats[lang] 
+    repoCountByLanguage[lang] += 1
   })
 }
 
@@ -82,7 +82,7 @@ const getCurrentProject = (repos: Repo[]) =>
     new Date(b.updated_at).valueOf() - new Date(a.updated_at).valueOf()
   )[0]
 
-export const fetchPieChartData = ({ setLanguagePercentages, token }: FetchPieChartDataArgs) => {
+export const fetchPieChartData = ({ setStore, token }: FetchPieChartDataArgs) => {
   const headers = new Headers({
     Authorization: `token ${token}`,
   })
@@ -108,7 +108,6 @@ export const fetchPieChartData = ({ setLanguagePercentages, token }: FetchPieCha
         fetch(repo.languages_url, { headers })
           .then(res => res.json())
           .then(repoStats => {
-            console.log('repoStats', repoStats);
             ['HTML', 'CSS', 'SCSS', 'Svelte'].forEach(lang =>
               delete repoStats[lang]
             )
@@ -122,8 +121,9 @@ export const fetchPieChartData = ({ setLanguagePercentages, token }: FetchPieCha
             calcLangPercentages(pieChartLanguageTotals)
           )
           
-          setLanguagePercentages({
+          setStore({
             pieChartLanguageTotals: sortedPieChartLanguageTotals,
+            projectCountersLanguageTotals,
             mostPopularRepo,
             currentProject,
           })

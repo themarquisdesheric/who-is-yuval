@@ -1,15 +1,15 @@
 <script lang="ts">
   import type { LanguageTotals } from '../types'
 
-  export let numberOfProjects: LanguageTotals
+  export let languageTotals: LanguageTotals
 </script>
 
 <div class="project-counters-outer absolute top-0 w-full h-full">
   <div class="project-counters-inner relative mx-auto h-full">
-    {#each Object.keys(numberOfProjects) as language, index}
+    {#each Object.entries(languageTotals) as [language, count], index}
       <div class="project-counter-{++index} absolute flex flex-col text-center">
         <span class="text-md font-light">{language}</span>
-        <span class="text-5xl font-bold">21</span>
+        <span class="text-5xl font-bold">{count}</span>
         <span class="text-md font-light">projects</span>
       </div>
     {/each}

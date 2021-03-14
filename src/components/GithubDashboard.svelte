@@ -25,19 +25,21 @@
 
   onMount(() => {
     if (dev) {
-      // don't call the API
+      // use mock data instead of calling the API
+      const mockLanguageTotals = {
+        JavaScript: 80,
+        Shell: 9,
+        TypeScript: 9,
+        Python: 1,
+      }
       store.update(pastStore => ({
         ...pastStore,
-        pieChartLanguageTotals: {
-          JavaScript: 80,
-          Shell: 9,
-          TypeScript: 9,
-          Python: 1,
-        }
+        pieChartLanguageTotals: mockLanguageTotals,
+        projectCountersLanguageTotals: mockLanguageTotals,
       }))
     } else if (!$store.pieChartLanguageTotals) {
       fetchPieChartData({
-        setLanguagePercentages: store.set,
+        setStore: store.set,
         token,
       })
     }
@@ -72,7 +74,9 @@
         {/each}
       </div>
 
-      <ProjectCounters numberOfProjects={$store.pieChartLanguageTotals} />
+      {#if $store.projectCountersLanguageTotals}
+        <ProjectCounters languageTotals={$store.projectCountersLanguageTotals} />
+      {/if}
     {:else}
       <LoadingSpinner />
     {/if}
