@@ -37,9 +37,11 @@ export const updateProjectCountersLanguageTotals = (repoStats: RepoLangStats, to
     repoLanguage = 'Shell'
   }
 
-  if (!totals[repoLanguage]) totals[repoLanguage] = 0
-
-  totals[repoLanguage] += 1
+  if (repoLanguage) {
+    if (!totals[repoLanguage]) totals[repoLanguage] = 0
+  
+    totals[repoLanguage] += 1
+  }
 }
 
 /**
@@ -119,14 +121,15 @@ export const fetchPieChartData = ({ setStore, token }: FetchPieChartDataArgs) =>
             calcLangPercentages(pieChartLanguageTotals)
           )
           
+          console.log('projectCountersLanguageTotals', projectCountersLanguageTotals);
+          
           setStore({
             pieChartLanguageTotals: sortedPieChartLanguageTotals,
             projectCountersLanguageTotals,
             mostPopularRepo,
             currentProject,
           })
-        }
-        )
+        })
     })
 }
 
