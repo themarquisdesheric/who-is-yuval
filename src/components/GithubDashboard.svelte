@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import store from '../store'
-  import { fetchPieChartData, instantiatePieChart } from '../routes/projects/utils'
+  import { fetchPieChartData, instantiatePieChart } from '../routes/work/utils'
   import ProjectCounters from './ProjectCounters.svelte'
   import LoadingSpinner from './LoadingSpinner.svelte'
 

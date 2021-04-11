@@ -13,10 +13,10 @@
 </script>
 
 <svelte:head>
-	<title>Projects | Who is Yuval?</title>
+	<title>Work | Who is Yuval?</title>
 </svelte:head>
 
 <div class="w-full">
-  <h1 class="text-lg pb-2">Projects</h1>
+  <h1 class="text-lg pb-2">Work</h1>
   <GithubDashboard {token} {dev} />
 </div>

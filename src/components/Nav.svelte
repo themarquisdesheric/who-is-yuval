@@ -2,7 +2,7 @@
 	import NavLink from './NavLink.svelte'
 
 	export let segment: string
-	const linkNames: string[] = ['projects', 'blog', 'contact']
+	const linkNames: string[] = ['work', 'blog', 'contact']
 	let isMobileMenuOpen = false
 	
 	const toggleMobileMenu = () =>
