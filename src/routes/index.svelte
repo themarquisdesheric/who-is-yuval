@@ -9,7 +9,7 @@
 			<hr class="primary" />
 			<div>
 				<p class="secondary text-center">Introduction by</p>
-				<h2 class="primary">Jorge Luis Borges</h2>
+				<h2 class="primary">The Marquis de Sheric</h2>
 			</div>
 		</div>
 	</section>
@@ -28,7 +28,7 @@
 		/* table is a cross-browser fallback for `height: fit-content` 🙃 */
 		display: table;
 		height: fit-content;
-		width: 50%;
+		width: 210px;
 		max-width: 300px;
 		margin: auto;
 		padding: 1rem 0;
@@ -72,6 +72,12 @@
 	hr {
 		max-width: 130px;
 		margin: .5rem auto .75rem;
+	}
+
+	@media screen and (min-width: 425px) {
+		.label {
+			width: 50%;
+		}
 	}
 
 	@media screen and (min-width: 1200px) {
