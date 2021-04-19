@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import store from '../store'
-  import { fetchPieChartData, instantiatePieChart } from '../routes/work/utils'
+  import { fetchPieChartData, instantiatePieChart, mockPieChartData } from '../routes/work/utils'
   import ProjectCounters from './ProjectCounters.svelte'
   import LoadingSpinner from './LoadingSpinner.svelte'
 
@@ -26,16 +26,9 @@
   onMount(() => {
     if (dev) {
       // use mock data instead of calling the API
-      const mockLanguageTotals = {
-        JavaScript: 80,
-        Shell: 9,
-        TypeScript: 9,
-        Python: 1,
-      }
       store.update(pastStore => ({
         ...pastStore,
-        pieChartLanguageTotals: mockLanguageTotals,
-        projectCountersLanguageTotals: mockLanguageTotals,
+        ...mockPieChartData,
       }))
     } else if (!$store.pieChartLanguageTotals) {
       fetchPieChartData({
