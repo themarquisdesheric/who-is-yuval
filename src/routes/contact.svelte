@@ -2,7 +2,7 @@
 </script>
 
 <svelte:head>
-	<title>Contact | Yuval Allweil</title>
+	<title>Contact | Who is Yuval?</title>
 </svelte:head>
 
 <div class="w-full">

@@ -1,11 +1,11 @@
 ---
-title: Sample Blog Title
+title: A Story About the World
 summary: A short post about...
 date: 2020-09-29
 tags: hello, world
 ---
 
-# this is a blog post
+here is a story about the life and times of the world
 
 - this
 - is

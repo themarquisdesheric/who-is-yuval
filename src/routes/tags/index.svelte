@@ -11,7 +11,7 @@
 </script>
 
 <svelte:head>
-	<title>Tags | Yuval Allweil</title>
+	<title>Tags | Who is Yuval?</title>
 </svelte:head>
 
 <div class="w-full">

@@ -3,11 +3,11 @@
 </script>
 
 <svelte:head>
-	<title>Blog Posts | Yuval Allweil</title>
+	<title>Blog Posts | Who is Yuval?</title>
 </svelte:head>
 
 <div class="w-full">
-  <h1 class="text-lg pb-2">Blog Posts</h1>
+  <h1 class="text-lg pb-2">Musings on art, tech, and code</h1>
   
   <div class="prose">
     {#each blogPosts as { slug, title }}

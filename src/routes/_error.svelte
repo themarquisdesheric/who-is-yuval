@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>{status} | Yuval Allweil</title>
+	<title>{status} | Who is Yuval?</title>
 </svelte:head>
 
 <div class="w-full flex flex-col justify-center text-center">
@@ -23,6 +23,13 @@
 {/if}
 
 <style>
+
+	div {
+		position: relative;
+		bottom: 25vh;
+		color: rgb(255, 252, 191);
+	}
+
 	h1 {
 		font-size: 5rem;
 	}
