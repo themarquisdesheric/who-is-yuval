@@ -12,7 +12,7 @@
 			<p>This is where the 'contact' content will be.</p>
 		</div>
 	</div>
-
+	<div class="map-background w-full border rounded border-gray-300" />
 </div>
 
 <style>
@@ -24,5 +24,10 @@
 	
 	p {
 		margin-top: .5rem;
+	}
+
+	.map-background {
+		background: url('/map.png') no-repeat center;
+		height: 500px;
 	}
 </style>
