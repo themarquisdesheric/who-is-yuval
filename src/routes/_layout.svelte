@@ -4,10 +4,10 @@
 	export let segment: string
 
 	const socialLinks = {
-		instagram: 'https://www.instagram.com/themarquisdesheric/',
+		twitter: 'https://twitter.com/esotericsheric',
 		linkedin: 'https://www.linkedin.com/in/yuval-allweil/',
 		github: 'https://github.com/themarquisdesheric',
-		twitter: 'https://twitter.com/esotericsheric',
+		instagram: 'https://www.instagram.com/themarquisdesheric/',
 	}
 	const socialLinksEntries = Object.entries(socialLinks)
 </script>
