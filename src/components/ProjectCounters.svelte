@@ -46,22 +46,20 @@
 
   .project-counter-1 {
     top: 0;
-    left: 2rem;
   }
   
   .project-counter-2 {
     top: 0;
-    right: 2rem;
+    right: 0;
   }
   
   .project-counter-3 {
     bottom: 0;
-    left: 2rem;
   }
 
   .project-counter-4 {
     bottom: 0;
-    right: 2rem;
+    right: 0;
   }
 
   @media (min-width: 768px) {

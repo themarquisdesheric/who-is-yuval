@@ -72,32 +72,12 @@
       <LoadingSpinner />
     {/if}
   </div>
-
-  <!-- use this for project card, not most popular repo -->
-  {#if $store.currentProject}
-    <div class="mx-auto my-8">
-      <h3>Current Project</h3>
-      <div class="flex text-small">
-        <p class="flex items-center mr-2">
-          <img src="star.svg" width="20" alt="star icon" />&nbsp;
-          <span>{$store.currentProject.stargazers_count} stars</span>
-        </p>
-        <p class="flex items-center">
-          <img src="fork-icon.svg" alt="git fork icon" width="20" />&nbsp;
-          <span>{$store.currentProject.forks_count} forks</span>
-        </p>
-      </div>
-      <p>{$store.currentProject.name}</p>
-      <p>{$store.currentProject.description}</p>
-    </div>
-  {/if}
 </section>
 
 
 <style>
   section {
     height: 100vh;
-    background-color: rgba(0, 0, 255, 0.2);
   }
 
   canvas {
