@@ -42,11 +42,9 @@
 </script>
 
 
-<section class="flex flex-col justify-center">
-  <h2 class="text-center font-bold mb-8 text-5xl">Github Dashboard</h2>
+<section class="flex flex-col justify-center mt-8 mb-16">
   <div class="relative">
-    <p class="text-center font-light mb-6">Language Composition of Projects</p>
-    
+    <p class="text-center font-light mb-6">Language Composition of Projects</p>    
     {#if $store.pieChartLanguageTotals}
       <div class="relative flex justify-center items-center w-full">
         <canvas bind:this={chartContext} />
@@ -76,10 +74,6 @@
 
 
 <style>
-  section {
-    height: 100vh;
-  }
-
   canvas {
     max-width: 800px;
     margin: 0 auto;

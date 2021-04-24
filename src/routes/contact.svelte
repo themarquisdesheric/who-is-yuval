@@ -6,7 +6,7 @@
 </svelte:head>
 
 <div class="w-full">
-	<h1>Contact Yuval</h1>
+	<h1 class="text-4xl font-extrabold">Contact Yuval</h1>
 	<div class="prose">
 		<div class="text-sm">
 			<p>This is where the 'contact' content will be.</p>
@@ -16,12 +16,6 @@
 </div>
 
 <style>
-	h1 {
-		font-size: 1.125rem;
-		line-height: 1.75rem;
-		font-weight: 400;
-	}
-	
 	p {
 		margin-top: .5rem;
 	}

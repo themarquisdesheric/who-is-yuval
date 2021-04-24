@@ -7,8 +7,7 @@
 </svelte:head>
 
 <div class="w-full">
-  <h1 class="text-lg pb-2">Musings on art, tech, and code</h1>
-  
+  <h1 class="text-4xl font-extrabold">Musings on art, tech, and code</h1>
   <div class="prose">
     {#each blogPosts as { slug, title }}
       <a href="/blog/{slug}">

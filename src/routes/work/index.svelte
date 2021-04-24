@@ -19,42 +19,52 @@
 </svelte:head>
 
 <div class="w-full">
-  <h1 class="text-lg pb-2">Work</h1>
-  <p>I currently work as a frontend developer for Kroger, where I bring to life beautiful and intuitive interfaces.</p>
-  <p>In the past I've done Conversion Rate Optimization for The Good, worked in several positions at fast-paced startups, and moonlighted as a UX consultant.</p>
-  <p>Here are some of the websites I’ve worked on:</p>
-  <div><p>logos...</p></div>
-  <h2 class="text-lg py-2">Tech/Toolkit</h2>
-  <p>I’ve worked primarily as a web developer but am interested in all aspects of software development. I find beauty in the diversity of patterns, languages, and paradigms in code. </p>
-  <p>Here are some of my favorite tech to work with:</p>
-  <div><p>logos...</p></div>
-  <GithubDashboard {token} {dev} />
-  <h2 class="text-lg py-2">Projects</h2>
-  <p>Here are some projects I've made over the years:</p>
-  <div><p>projects...</p></div>
-  <!-- use this for project card, not most popular repo -->
-  {#if $store.currentProject}
-    <div class="mx-auto my-8">
-      <h3>Current Project</h3>
-      <div class="flex text-small">
-        <p class="flex items-center mr-2">
-          <img src="star.svg" width="20" alt="star icon" />&nbsp;
-          <span>{$store.currentProject.stargazers_count} stars</span>
-        </p>
-        <p class="flex items-center">
-          <img src="fork-icon.svg" alt="git fork icon" width="20" />&nbsp;
-          <span>{$store.currentProject.forks_count} forks</span>
-        </p>
+  <section>
+    <h1 class="text-4xl font-extrabold">Work</h1>
+    <p>I currently work as a frontend developer for Kroger, where I bring to life beautiful and intuitive interfaces.</p>
+    <p>In the past I've done Conversion Rate Optimization for The Good, worked in several positions at fast-paced startups, and moonlighted as a UX consultant.</p>
+    <p>Here are some of the websites I’ve worked on:</p>
+    <div><p>logos...</p></div>
+  </section>
+  <section>
+    <h2 class="text-4xl font-extrabold">Projects</h2>
+    <p>I’ve worked primarily as a web developer but am interested in all aspects of software development. I find beauty in the diversity of patterns, languages, and paradigms in code. </p>
+    <p>Here are some of my favorite tech to work with:</p>
+    <div><p>logos...</p></div>
+  </section>
+  <section>
+    <!-- <h3 class="text-4xl font-extrabold">Projects</h3> -->
+    <GithubDashboard {token} {dev} />
+    <p>Here are some projects I've made over the years:</p>
+    <div><p>projects...</p></div>
+    <!-- use this for project card, not most popular repo -->
+    {#if $store.currentProject}
+      <div class="mx-auto my-8">
+        <h3>Current Project</h3>
+        <div class="flex text-small">
+          <p class="flex items-center mr-2">
+            <img src="star.svg" width="20" alt="star icon" />&nbsp;
+            <span>{$store.currentProject.stargazers_count} stars</span>
+          </p>
+          <p class="flex items-center">
+            <img src="fork-icon.svg" alt="git fork icon" width="20" />&nbsp;
+            <span>{$store.currentProject.forks_count} forks</span>
+          </p>
+        </div>
+        <p>{$store.currentProject.name}</p>
+        <p>{$store.currentProject.description}</p>
       </div>
-      <p>{$store.currentProject.name}</p>
-      <p>{$store.currentProject.description}</p>
-    </div>
-  {:else}
-    <LoadingSpinner />
-  {/if}
+    {:else}
+      <LoadingSpinner />
+    {/if}
+  </section>
 </div>
 
 <style>
+  section {
+    margin-bottom: 4rem;
+  }
+
   p {
     margin: 1rem 0;
   }
