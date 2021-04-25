@@ -99,7 +99,7 @@ export const fetchPieChartData = ({ setStore, token }: FetchPieChartDataArgs) =>
         repo.owner.login === 'themarquisdesheric' && repo.name !== 'incubator-datafu' && !repo.private
       )
       currentProject = getCurrentProject(repos)
-      // ! make a component to display the number of stars with the forks_count and repo's name
+      
       const mostPopularRepo = repos.sort((a, b) =>
         b.stargazers_count - a.stargazers_count
       )[0]
@@ -171,10 +171,14 @@ const mockLanguageTotals = {
 export const mockPieChartData = {
   pieChartLanguageTotals: mockLanguageTotals,
   projectCountersLanguageTotals: mockLanguageTotals,
-  currentProject: {
+  mostPopularRepo: {
     name: 'simply-svelte-autocomplete',
     description: 'A lightweight typeahead component written in SvelteJS',
     stargazers_count: 15,
     forks_count: 4,
-  }
+  },
+  currentProject: {
+    name: 'who-is-yuval',
+    description: 'New version of personal site: A lightweight typeahead component written in SvelteJS',
+  },
 }
