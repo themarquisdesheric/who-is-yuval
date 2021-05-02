@@ -17,11 +17,13 @@
     'rgba(75, 192, 192, 0.2)',
   ]
 
-  $: chart = chartContext && $store.pieChartLanguageTotals && instantiatePieChart({
-    chartContext,
-    languagePercentages: $store.pieChartLanguageTotals,
-    languageColors
-  })
+  $: chart = chartContext &&
+    $store.pieChartLanguageTotals &&
+      instantiatePieChart({
+        chartContext,
+        languagePercentages: $store.pieChartLanguageTotals,
+        languageColors
+      })
 
   onMount(() => {
     if (dev) {

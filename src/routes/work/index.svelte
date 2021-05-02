@@ -21,14 +21,14 @@
 <div class="w-full">
   <section>
     <h1 class="text-4xl font-extrabold">Work</h1>
-    <p>I currently work as a frontend developer for Kroger, where I bring to life beautiful and intuitive interfaces.</p>
+    <p>I work as a frontend developer for Kroger, where I bring to life beautiful and intuitive interfaces.</p>
     <p>In the past I've done Conversion Rate Optimization for The Good, worked in several positions at fast-paced startups, and moonlighted as a UX consultant.</p>
     <p>Here are some of the websites I’ve worked on:</p>
     <div><p>logos...</p></div>
   </section>
   <section>
     <h2 class="text-4xl font-extrabold">Projects</h2>
-    <p>I’ve worked primarily as a web developer but am interested in all aspects of software development. I find beauty in the diversity of patterns, languages, and paradigms in code. </p>
+    <p>I’ve worked primarily with JavaScript as a web developer but am interested in all aspects of software development. I find beauty in the diversity of patterns, languages, and paradigms in code. </p>
     <p>Here are some of my favorite tech to work with:</p>
     <div><p>logos...</p></div>
   </section>
@@ -37,27 +37,31 @@
     <p>Here are some projects I've made over the years:</p>
     <div><p>projects...</p></div>
 
-    {#if $store.currentProject}
+    {#if $store.mostPopularRepo}
       <div>
         <div class="most-popular-repo mx-auto my-8">
-          <h3 class="text-2xl font-extrabold">Most Popular Github Repo</h3>
-          <p class="font-mono">{$store.mostPopularRepo.name}</p>
-          <div class="most-popular-github-info flex text-xs">
-            <p class="flex items-center mr-2">
-              <img src="star.svg" width="20" alt="star icon" />&nbsp;
-              <span>{$store.mostPopularRepo.stargazers_count} stars</span>
-            </p>
-            <p class="flex items-center">
-              <img src="fork-icon.svg" alt="git fork icon" width="20" />&nbsp;
-              <span>{$store.mostPopularRepo.forks_count} forks</span>
-            </p>
-          </div>
-          <p class="text-sm">{$store.mostPopularRepo.description}</p>
+          <h3 class="text-3xl font-extrabold">Most Popular Github Repo</h3>
+          <a href={$store.mostPopularRepo.html_url} target="_blank">
+            <p class="font-mono">{$store.mostPopularRepo.name}</p>
+            <div class="flex text-xs">
+              <p class="stars-forks flex items-center mr-2 font-mono">
+                <img src="star.svg" width="20" alt="star icon" class="relative" />&nbsp;
+                <span>{$store.mostPopularRepo.stargazers_count} stars</span>
+              </p>
+              <p class="stars-forks flex items-center font-mono">
+                <img src="fork-icon.svg" alt="git fork icon" width="20" />&nbsp;
+                <span>{$store.mostPopularRepo.forks_count} forks</span>
+              </p>
+            </div>
+            <p class="text-xs font-mono">{$store.mostPopularRepo.description}</p>
+          </a>
         </div>
         <div class="mx-auto my-8">
-          <h4 class="text-2xl font-extrabold">Current Project</h4>
-          <p class="font-mono">{$store.currentProject.name}</p>
-          <p class="text-sm">{$store.currentProject.description}</p>
+          <h4 class="text-3xl font-extrabold">Current Project</h4>
+          <a href={$store.currentProject.html_url} target="_blank">
+            <p class="font-mono">{$store.currentProject.name}</p>
+            <p class="text-xs font-mono">{$store.currentProject.description}</p>
+          </a>
         </div>
       </div>
     {:else}
@@ -72,12 +76,16 @@
     margin-bottom: 4rem;
   }
 
-  .most-popular-repo > p {
+  .most-popular-repo a > p {
     margin-bottom: 0;
   }
 
-  .most-popular-github-info p {
+  .stars-forks {
     margin: 0.5rem 0.5rem 0 0;
+  }
+
+  img[src="star.svg"] {
+    bottom: 1px;
   }
 
   p {

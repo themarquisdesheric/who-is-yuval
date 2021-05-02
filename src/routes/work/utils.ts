@@ -176,9 +176,11 @@ export const mockPieChartData = {
     description: 'A lightweight typeahead component written in SvelteJS',
     stargazers_count: 15,
     forks_count: 4,
+    html_url: 'https://github.com/themarquisdesheric/simply-svelte-autocomplete'
   },
   currentProject: {
     name: 'who-is-yuval',
-    description: 'New version of personal site: A lightweight typeahead component written in SvelteJS',
+    description: 'New version of personal site: New version of personal site: New version of personal site',
+    html_url: 'https://github.com/themarquisdesheric/who-is-yuval'
   },
 }
