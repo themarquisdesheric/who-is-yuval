@@ -160,27 +160,3 @@ export const instantiatePieChart = ({
       }
     }
   })
-
-const mockLanguageTotals = {
-  JavaScript: 80,
-  Shell: 9,
-  TypeScript: 9,
-  Python: 1,
-}
-
-export const mockPieChartData = {
-  pieChartLanguageTotals: mockLanguageTotals,
-  projectCountersLanguageTotals: mockLanguageTotals,
-  mostPopularRepo: {
-    name: 'simply-svelte-autocomplete',
-    description: 'A lightweight typeahead component written in SvelteJS',
-    stargazers_count: 15,
-    forks_count: 4,
-    html_url: 'https://github.com/themarquisdesheric/simply-svelte-autocomplete'
-  },
-  currentProject: {
-    name: 'who-is-yuval',
-    description: 'New version of personal site: New version of personal site: New version of personal site',
-    html_url: 'https://github.com/themarquisdesheric/who-is-yuval'
-  },
-}

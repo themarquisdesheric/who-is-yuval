@@ -1,9 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import store from '../store'
-  import { fetchPieChartData, instantiatePieChart, mockPieChartData } from '../routes/work/utils'
+  import store from '../../store'
+  import { fetchPieChartData, instantiatePieChart } from './utils'
+  import { mockPieChartData } from './data'
   import ProjectCounters from './ProjectCounters.svelte'
-  import LoadingSpinner from './LoadingSpinner.svelte'
+  import LoadingSpinner from '../../components/LoadingSpinner.svelte'
 
   export let token: string
   export let dev: boolean
